@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Distrito Federal — Regiões e Diversidade</title>
+
+  <style>
+    :root {
+      --verde: #176b3a;
+      --verde-escuro: #0d4727;
+      --verde-claro: #2e9d5b;
+      --amarelo: #f4c542;
+      --azul: #1769aa;
+      --vermelho: #c94c4c;
+      --roxo: #7654a3;
+      --fundo: #f5f7f6;
+      --texto: #17231c;
+      --branco: #ffffff;
+      --cinza: #6b756f;
+      --sombra: 0 10px 30px rgba(0,0,0,.08);
+      --raio: 18px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--fundo);
+      color: var(--texto);
+      line-height: 1.6;
+    }
+
+    /* CABEÇALHO */
+    header {
+      background:
+        linear-gradient(135deg, rgba(13,71,39,.96), rgba(23,107,58,.90)),
+        radial-gradient(circle at top right, #f4c542, transparent 30%);
+      color: white;
+      min-height: 620px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav {
+      width: min(1150px, 92%);
+      margin: auto;
+      padding: 25px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+    }
+
+    .logo span {
+      color: var(--amarelo);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: .2s;
+    }
+
+    nav a:hover {
+      color: var(--amarelo);
+    }
+
+    .hero {
+      width: min(1150px, 92%);
+      margin: auto;
+      padding: 70px 0 110px;
+      display: grid;
+      grid-template-columns: 1.3fr .7fr;
+      align-items: center;
+      gap: 50px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.7rem, 6vw, 5rem);
+      line-height: 1;
+      margin-bottom: 25px;
+    }
+
+    .hero h1 span {
+      color: var(--amarelo);
+    }
+
+    .hero p {
+      max-width: 650px;
+      font-size: 1.15rem;
+      color: #e8f2eb;
+      margin-bottom: 30px;
+    }
+
+    .botao {
+      display: inline-block;
+      background: var(--amarelo);
+      color: #1c261e;
+      padding: 14px 23px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 800;
+      transition: .2s;
+    }
+
+    .botao:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,.2);
+    }
+
+    .mapa {
+      height: 310px;
+      border: 2px solid rgba(255,255,255,.25);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 40% 35%, #3ba866 0 10%, transparent 11%),
+        radial-gradient(circle at 65% 60%, #f4c542 0 9%, transparent 10%),
+        radial-gradient(circle at 50% 50%, #237b48 0 40%, #135b34 41% 65%, transparent 66%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: inset 0 0 50px rgba(0,0,0,.2);
+    }
+
+    .mapa span {
+      background: white;
+      color: var(--verde-escuro);
+      padding: 15px 20px;
+      border-radius: 12px;
+      font-weight: 800;
+      box-shadow: var(--sombra);
+    }
+
+    /* CONTEÚDO */
+    main {
+      width: min(1150px, 92%);
+      margin: auto;
+    }
+
+    section {
+      padding: 85px 0;
+    }
+
+    .titulo {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+
+    .titulo small {
+      color: var(--verde);
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .titulo h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin: 8px 0;
+    }
+
+    .titulo p {
+      max-width: 700px;
+      margin: auto;
+      color: var(--cinza);
+    }
+
+    /* CARDS DE REGIÕES */
+    .filtros {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 35px;
+    }
+
+    .filtro {
+      border: 1px solid #d8dfda;
+      background: white;
+      padding: 10px 17px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--verde-escuro);
+    }
+
+    .filtro.ativo,
+    .filtro:hover {
+      background: var(--verde);
+      color: white;
+      border-color: var(--verde);
+    }
+
+    .regioes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: var(--raio);
+      padding: 25px;
+      box-shadow: var(--sombra);
+      border: 1px solid #e4e9e5;
+      transition: .25s;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+    }
+
+    .card-topo {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .numero {
+      background: #e7f4eb;
+      color: var(--verde);
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      font-weight: 900;
+    }
+
+    .card h3 {
+      font-size: 1.35rem;
+      margin-bottom: 5px;
+    }
+
+    .card p {
+      color: var(--cinza);
+      font-size: .95rem;
+    }
+
+    .dados-raca-card {
+      margin-top: 12px;
+      color: var(--texto) !important;
+      font-size: .82rem !important;
+      line-height: 1.55;
+    }
+
+    .dados-raca-card strong {
+      color: var(--verde-escuro);
+    }
+
+    .tag {
+      display: inline-block;
+      margin-top: 18px;
+      background: #f0f4f1;
+      color: var(--verde-escuro);
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: .8rem;
+      font-weight: 700;
+    }
+
+    /* DIVERSIDADE */
+    .diversidade {
+      background: var(--verde-escuro);
+      color: white;
+      width: 100vw;
+      margin-left: calc((1150px - 100vw) / 2);
+    }
+
+    .diversidade-inner {
+      width: min(1150px, 92%);
+      margin: auto;
+    }
+
+    .diversidade .titulo p {
+      color: #c9dbcf;
+    }
+
+    .racas {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 15px;
+    }
+
+    .raca {
+      padding: 25px 15px;
+      text-align: center;
+      border-radius: 15px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.1);
+    }
+
+    .circulo {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 15px;
+      border-radius: 50%;
+    }
+
+    .branca { background: #f0d4bd; }
+    .preta { background: #43261a; }
+    .parda { background: #9b6849; }
+    .amarela { background: #e4b95c; }
+    .indigena { background: #73452f; }
+
+    .raca h3 {
+      font-size: 1rem;
+      margin-bottom: 5px;
+    }
+
+    .raca p {
+      color: #c9dbcf;
+      font-size: .8rem;
+    }
+
+
+    /* GRÁFICOS ESTATÍSTICOS */
+    #graficos-raca {
+      background: #f5f7f6;
+    }
+
+    .grafico-card {
+      background: white;
+      border-radius: var(--raio);
+      padding: 30px;
+      box-shadow: var(--sombra);
+      border: 1px solid #e4e9e5;
+      margin-bottom: 25px;
+      overflow-x: auto;
+    }
+
+    .grafico-card h3 {
+      color: var(--verde-escuro);
+      margin-bottom: 20px;
+      font-size: 1.35rem;
+    }
+
+    .legenda-grafico {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 25px;
+      color: var(--cinza);
+      font-size: .9rem;
+      font-weight: 700;
+    }
+
+    .legenda-grafico span {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .legenda-grafico i {
+      width: 13px;
+      height: 13px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .leg-branca { background: #d9a57f; }
+    .leg-preta { background: #5b3525; }
+    .leg-parda { background: #a86f4e; }
+    .leg-amarela { background: #e4b95c; }
+    .leg-indigena { background: #73452f; }
+
+    .grafico-barras {
+      min-width: 3300px;
+      display: grid;
+      grid-template-columns: repeat(33, minmax(88px, 1fr));
+      gap: 14px;
+      align-items: end;
+      height: 390px;
+      padding: 25px 10px 45px;
+      border-bottom: 2px solid #cfd8d2;
+      background:
+        repeating-linear-gradient(
+          to top,
+          transparent 0,
+          transparent 73px,
+          #e9efeb 74px,
+          #e9efeb 75px
+        );
+    }
+
+    .grupo-regiao {
+      height: 100%;
+      display: flex;
+      align-items: end;
+      justify-content: center;
+      gap: 3px;
+      position: relative;
+    }
+
+    .grupo-regiao .nome-regiao {
+      position: absolute;
+      bottom: -38px;
+      width: 110px;
+      text-align: center;
+      font-size: .78rem;
+      font-weight: 800;
+      color: var(--texto);
+    }
+
+    .barra {
+      width: 16px;
+      min-height: 2px;
+      border-radius: 5px 5px 0 0;
+      position: relative;
+      transition: transform .2s;
+    }
+
+    .barra:hover {
+      transform: translateY(-4px);
+    }
+
+    .barra span {
+      position: absolute;
+      bottom: calc(100% + 5px);
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: .68rem;
+      font-weight: 800;
+      white-space: nowrap;
+      color: var(--texto);
+    }
+
+    .barra.branca { background: #d9a57f; }
+    .barra.preta { background: #5b3525; }
+    .barra.parda { background: #a86f4e; }
+    .barra.amarela { background: #e4b95c; }
+    .barra.indigena { background: #73452f; }
+
+    .barra.nd {
+      background: #cfd6d1;
+      height: 5px !important;
+    }
+
+    .nota-grafico {
+      margin-top: 18px;
+      color: var(--cinza);
+      font-size: .85rem;
+    }
+
+    .seletor-grafico {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-weight: 700;
+    }
+
+    .seletor-grafico select {
+      padding: 9px 12px;
+      border: 1px solid #cfd8d2;
+      border-radius: 9px;
+      font-weight: 700;
+      color: var(--verde-escuro);
+      background: white;
+    }
+
+    .grafico-horizontal {
+      display: grid;
+      gap: 14px;
+      min-width: 650px;
+    }
+
+    .linha-categoria {
+      display: grid;
+      grid-template-columns: 120px 1fr 65px;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .linha-categoria .rotulo {
+      font-size: .85rem;
+      font-weight: 800;
+    }
+
+    .trilho {
+      height: 24px;
+      background: #edf1ee;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .preenchimento {
+      height: 100%;
+      border-radius: 999px;
+      transition: width .35s ease;
+      background: var(--verde);
+    }
+
+    .valor-categoria {
+      font-weight: 900;
+      text-align: right;
+      color: var(--verde-escuro);
+    }
+
+    /* INFORMAÇÕES */
+    .info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+    }
+
+    .info-box {
+      background: white;
+      border-radius: var(--raio);
+      padding: 30px;
+      box-shadow: var(--sombra);
+    }
+
+    .info-box h3 {
+      color: var(--verde);
+      margin-bottom: 12px;
+    }
+
+    .info-box p {
+      color: var(--cinza);
+    }
+
+    /* ESTATÍSTICAS */
+    .estatisticas {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .estatistica {
+      text-align: center;
+      padding: 30px;
+      background: white;
+      border-radius: var(--raio);
+      box-shadow: var(--sombra);
+    }
+
+    .estatistica strong {
+      display: block;
+      font-size: 2.6rem;
+      color: var(--verde);
+    }
+
+    .estatistica span {
+      color: var(--cinza);
+    }
+
+    /* FONTES */
+    .fontes {
+      background: #e9efeb;
+      padding: 35px;
+      border-radius: var(--raio);
+    }
+
+    .fontes a {
+      color: var(--verde);
+      font-weight: bold;
+    }
+
+    /* RODAPÉ */
+    footer {
+      background: #092d1a;
+      color: #c9dbcf;
+      padding: 35px 5%;
+      text-align: center;
+    }
+
+    footer strong {
+      color: white;
+    }
+
+    /* RESPONSIVO */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .regioes {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .racas {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .diversidade {
+        margin-left: calc((92vw - 100vw) / 2);
+      }
+    }
+
+    @media (max-width: 650px) {
+      nav ul {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 40px;
+      }
+
+      .mapa {
+        height: 230px;
+      }
+
+      .regioes,
+      .info,
+      .estatisticas {
+        grid-template-columns: 1fr;
+      }
+
+      .racas {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+
+  <nav>
+    <div class="logo">DF<span>+</span></div>
+
+    <ul>
+      <li><a href="#regioes">Regiões</a></li>
+      <li><a href="#diversidade">Diversidade</a></li>
+      <li><a href="#graficos-raca">Gráficos</a></li>
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#fontes">Fontes</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+
+    <div>
+      <h1>
+        Distrito Federal:
+        <span>regiões e diversidade</span>
+      </h1>
+
+      <p>
+        Conheça as Regiões Administrativas do Distrito Federal,
+        suas características e a diversidade de raça/cor presente
+        na população brasiliense.
+      </p>
+
+      <a href="#regioes" class="botao">
+        Explorar regiões ↓
+      </a>
+    </div>
+
+    <div class="mapa">
+      <span>Distrito Federal</span>
+    </div>
+
+  </div>
+
+</header>
+
+<main>
+
+  <!-- REGIÕES -->
+
+  <section id="regioes">
+
+    <div class="titulo">
+      <small>Explore o DF</small>
+      <h2>Regiões Administrativas</h2>
+
+      <p>
+        O Distrito Federal é dividido em Regiões Administrativas,
+        que possuem características históricas, urbanas e sociais
+        diferentes.
+      </p>
+    </div>
+
+    <div class="filtros">
+      <button class="filtro ativo" onclick="filtrar('todas', this)">Todas as 35 RAs</button>
+    </div>
+
+    <div class="regioes">
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Plano Piloto</h3>
+            <p>RA I</p>
+          </div>
+          <div class="numero">01</div>
+        </div>
+
+        <p>Área central de Brasília, onde estão importantes espaços administrativos, culturais e monumentais.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 61,0% • Preta: 6,7% • Parda: 30,7% • Amarela: 1,3% • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Gama</h3>
+            <p>RA II</p>
+          </div>
+          <div class="numero">02</div>
+        </div>
+
+        <p>Região ao sul do território do Distrito Federal, com importante identidade comunitária.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 42,3% • Preta: 14,0% • Parda: 42,8% • Amarela: N/D • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Taguatinga</h3>
+            <p>RA III</p>
+          </div>
+          <div class="numero">03</div>
+        </div>
+
+        <p>Uma das áreas mais tradicionais e populosas do DF, com forte atividade comercial e cultural.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 41,5% • Preta: 10,7% • Parda: 45,6% • Amarela: 1,8% • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Brazlândia</h3>
+            <p>RA IV</p>
+          </div>
+          <div class="numero">04</div>
+        </div>
+
+        <p>Região Administrativa contemplada pela PDAD 2021, com dados de raça/cor apresentados nos gráficos.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 28,3% • Preta: 11,7% • Parda: 57,5% • Amarela: 2,1% • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Sobradinho</h3>
+            <p>RA V</p>
+          </div>
+          <div class="numero">05</div>
+        </div>
+
+        <p>Região ao norte do DF, próxima a áreas de cerrado, parques e zonas rurais.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 38,6% • Preta: 16,5% • Parda: 43,5% • Amarela: N/D • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Planaltina</h3>
+            <p>RA VI</p>
+          </div>
+          <div class="numero">06</div>
+        </div>
+
+        <p>Região histórica do DF, com áreas urbanas e rurais e forte ligação com a história de Brasília.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 34,3% • Preta: 11,2% • Parda: 52,0% • Amarela: 2,0% • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Paranoá</h3>
+            <p>RA VII</p>
+          </div>
+          <div class="numero">07</div>
+        </div>
+
+        <p>Região Administrativa contemplada pela PDAD 2021, com dados de raça/cor apresentados nos gráficos.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 28,1% • Preta: 12,8% • Parda: 57,8% • Amarela: N/D • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Núcleo Bandeirante</h3>
+            <p>RA VIII</p>
+          </div>
+          <div class="numero">08</div>
+        </div>
+
+        <p>Região Administrativa contemplada pela PDAD 2021, com dados de raça/cor apresentados nos gráficos.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 38,5% • Preta: 11,1% • Parda: 47,6% • Amarela: 2,5% • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Ceilândia</h3>
+            <p>RA IX</p>
+          </div>
+          <div class="numero">09</div>
+        </div>
+
+        <p>Uma das regiões mais populosas do Distrito Federal, com forte diversidade cultural e social.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 38,9% • Preta: 14,0% • Parda: 45,8% • Amarela: N/D • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Guará</h3>
+            <p>RA X</p>
+          </div>
+          <div class="numero">10</div>
+        </div>
+
+        <p>Região Administrativa contemplada pela PDAD 2021, com dados de raça/cor apresentados nos gráficos.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 51,8% • Preta: 6,6% • Parda: 40,5% • Amarela: 0,8% • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Cruzeiro</h3>
+            <p>RA XI</p>
+          </div>
+          <div class="numero">11</div>
+        </div>
+
+        <p>Região Administrativa contemplada pela PDAD 2021, com dados de raça/cor apresentados nos gráficos.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 55,5% • Preta: 7,5% • Parda: 35,5% • Amarela: N/D • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Samambaia</h3>
+            <p>RA XII</p>
+          </div>
+          <div class="numero">12</div>
+        </div>
+
+        <p>Região de grande crescimento populacional e importante polo residencial do Distrito Federal.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 36,7% • Preta: 10,5% • Parda: 50,7% • Amarela: N/D • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Santa Maria</h3>
+            <p>RA XIII</p>
+          </div>
+          <div class="numero">13</div>
+        </div>
+
+        <p>Região localizada ao sul do DF, com áreas residenciais, comerciais e espaços de preservação.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 32,9% • Preta: 15,0% • Parda: 50,4% • Amarela: 1,1% • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>São Sebastião</h3>
+            <p>RA XIV</p>
+          </div>
+          <div class="numero">14</div>
+        </div>
+
+        <p>Região Administrativa contemplada pela PDAD 2021, com dados de raça/cor apresentados nos gráficos.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 25,0% • Preta: 11,9% • Parda: 62,1% • Amarela: 0,8% • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Recanto das Emas</h3>
+            <p>RA XV</p>
+          </div>
+          <div class="numero">15</div>
+        </div>
+
+        <p>Região Administrativa contemplada pela PDAD 2021, com dados de raça/cor apresentados nos gráficos.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 30,4% • Preta: 13,6% • Parda: 53,3% • Amarela: 2,3% • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Lago Sul</h3>
+            <p>RA XVI</p>
+          </div>
+          <div class="numero">16</div>
+        </div>
+
+        <p>Região Administrativa contemplada pela PDAD 2021, com dados de raça/cor apresentados nos gráficos.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 66,8% • Preta: 2,4% • Parda: 30,3% • Amarela: N/D • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Riacho Fundo</h3>
+            <p>RA XVII</p>
+          </div>
+          <div class="numero">17</div>
+        </div>
+
+        <p>Região Administrativa contemplada pela PDAD 2021, com dados de raça/cor apresentados nos gráficos.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 39,0% • Preta: 11,5% • Parda: 46,7% • Amarela: 2,6% • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Lago Norte</h3>
+            <p>RA XVIII</p>
+          </div>
+          <div class="numero">18</div>
+        </div>
+
+        <p>Região Administrativa contemplada pela PDAD 2021, com dados de raça/cor apresentados nos gráficos.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 60,6% • Preta: 6,1% • Parda: 32,8% • Amarela: N/D • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Candangolândia</h3>
+            <p>RA XIX</p>
+          </div>
+          <div class="numero">19</div>
+        </div>
+
+        <p>Região Administrativa contemplada pela PDAD 2021, com dados de raça/cor apresentados nos gráficos.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 38,6% • Preta: 15,6% • Parda: 43,7% • Amarela: 1,7% • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Águas Claras</h3>
+            <p>RA XX</p>
+          </div>
+          <div class="numero">20</div>
+        </div>
+
+        <p>Região marcada pelo crescimento urbano vertical, comércio e grande concentração residencial.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 55,3% • Preta: 3,5% • Parda: 40,1% • Amarela: 1,0% • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Riacho Fundo II</h3>
+            <p>RA XXI</p>
+          </div>
+          <div class="numero">21</div>
+        </div>
+
+        <p>Região Administrativa contemplada pela PDAD 2021, com dados de raça/cor apresentados nos gráficos.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 30,2% • Preta: 11,9% • Parda: 56,7% • Amarela: 1,0% • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Sudoeste/Octogonal</h3>
+            <p>RA XXII</p>
+          </div>
+          <div class="numero">22</div>
+        </div>
+
+        <p>Região Administrativa contemplada pela PDAD 2021, com dados de raça/cor apresentados nos gráficos.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 62,0% • Preta: 2,6% • Parda: 33,7% • Amarela: 1,5% • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Varjão</h3>
+            <p>RA XXIII</p>
+          </div>
+          <div class="numero">23</div>
+        </div>
+
+        <p>Região Administrativa contemplada pela PDAD 2021, com dados de raça/cor apresentados nos gráficos.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 27,5% • Preta: 22,9% • Parda: 47,2% • Amarela: 1,9% • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Park Way</h3>
+            <p>RA XXIV</p>
+          </div>
+          <div class="numero">24</div>
+        </div>
+
+        <p>Região Administrativa contemplada pela PDAD 2021, com dados de raça/cor apresentados nos gráficos.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 63,7% • Preta: 8,0% • Parda: 26,3% • Amarela: 2,1% • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>SCIA-Estrutural</h3>
+            <p>RA XXV</p>
+          </div>
+          <div class="numero">25</div>
+        </div>
+
+        <p>Região Administrativa contemplada pela PDAD 2021, com dados de raça/cor apresentados nos gráficos.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 21,4% • Preta: 14,2% • Parda: 61,2% • Amarela: 2,2% • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Sobradinho II</h3>
+            <p>RA XXVI</p>
+          </div>
+          <div class="numero">26</div>
+        </div>
+
+        <p>Região Administrativa contemplada pela PDAD 2021, com dados de raça/cor apresentados nos gráficos.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 35,3% • Preta: 16,6% • Parda: 46,4% • Amarela: N/D • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Jardim Botânico</h3>
+            <p>RA XXVII</p>
+          </div>
+          <div class="numero">27</div>
+        </div>
+
+        <p>Região Administrativa contemplada pela PDAD 2021, com dados de raça/cor apresentados nos gráficos.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 56,2% • Preta: 6,5% • Parda: 35,7% • Amarela: 1,4% • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Itapoã</h3>
+            <p>RA XXVIII</p>
+          </div>
+          <div class="numero">28</div>
+        </div>
+
+        <p>Região Administrativa contemplada pela PDAD 2021, com dados de raça/cor apresentados nos gráficos.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 32,4% • Preta: 19,8% • Parda: 45,4% • Amarela: N/D • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>SIA</h3>
+            <p>RA XXIX</p>
+          </div>
+          <div class="numero">29</div>
+        </div>
+
+        <p>Região Administrativa contemplada pela PDAD 2021, com dados de raça/cor apresentados nos gráficos.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 42,1% • Preta: N/D • Parda: 50,2% • Amarela: N/D • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Vicente Pires</h3>
+            <p>RA XXX</p>
+          </div>
+          <div class="numero">30</div>
+        </div>
+
+        <p>Região Administrativa contemplada pela PDAD 2021, com dados de raça/cor apresentados nos gráficos.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 45,2% • Preta: 6,5% • Parda: 47,3% • Amarela: 0,9% • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Fercal</h3>
+            <p>RA XXXI</p>
+          </div>
+          <div class="numero">31</div>
+        </div>
+
+        <p>Região Administrativa contemplada pela PDAD 2021, com dados de raça/cor apresentados nos gráficos.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 24,7% • Preta: 15,3% • Parda: 57,7% • Amarela: N/D • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Sol Nascente/Pôr do Sol</h3>
+            <p>RA XXXII</p>
+          </div>
+          <div class="numero">32</div>
+        </div>
+
+        <p>Região Administrativa contemplada pela PDAD 2021, com dados de raça/cor apresentados nos gráficos.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 30,3% • Preta: 14,0% • Parda: 53,9% • Amarela: 1,4% • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+      <article class="card">
+        <div class="card-topo">
+          <div>
+            <h3>Arniqueira</h3>
+            <p>RA XXXIII</p>
+          </div>
+          <div class="numero">33</div>
+        </div>
+
+        <p>Região Administrativa contemplada pela PDAD 2021, com dados de raça/cor apresentados nos gráficos.</p>
+
+        <p class="dados-raca-card"><strong>Raça/cor:</strong> Branca: 44,6% • Preta: 9,1% • Parda: 43,6% • Amarela: 1,9% • Indígena: N/D</p>
+
+        <span class="tag">PDAD 2021 • Dados de raça/cor</span>
+      </article>
+
+    </div>
+
+  
+      <article class="card">
+        <h3>Arapoanga</h3>
+        <div class="dados-raca-card">
+          <div><strong>Branca:</strong> N/D</div>
+          <div><strong>Preta:</strong> N/D</div>
+          <div><strong>Parda:</strong> N/D</div>
+          <div><strong>Amarela:</strong> N/D</div>
+          <div><strong>Indígena:</strong> N/D</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Água Quente</h3>
+        <div class="dados-raca-card">
+          <div><strong>Branca:</strong> N/D</div>
+          <div><strong>Preta:</strong> N/D</div>
+          <div><strong>Parda:</strong> N/D</div>
+          <div><strong>Amarela:</strong> N/D</div>
+          <div><strong>Indígena:</strong> N/D</div>
+        </div>
+      </article>
+</section>
+
+
+  <!-- DIVERSIDADE -->
+
+  <section id="diversidade" class="diversidade">
+
+    <div class="diversidade-inner">
+
+      <div class="titulo">
+        <small style="color:#f4c542;">Diversidade</small>
+
+        <h2>Raça/cor no Distrito Federal</h2>
+
+        <p>
+          A população brasileira é estatisticamente classificada
+          segundo categorias de raça/cor utilizadas pelo IBGE.
+          Essas categorias ajudam a compreender desigualdades
+          sociais e demográficas.
+        </p>
+      </div>
+
+
+      <div class="racas">
+
+        <div class="raca">
+          <div class="circulo branca"></div>
+          <h3>Branca</h3>
+          <p>Categoria de raça/cor</p>
+        </div>
+
+        <div class="raca">
+          <div class="circulo preta"></div>
+          <h3>Preta</h3>
+          <p>Categoria de raça/cor</p>
+        </div>
+
+        <div class="raca">
+          <div class="circulo parda"></div>
+          <h3>Parda</h3>
+          <p>Categoria de raça/cor</p>
+        </div>
+
+        <div class="raca">
+          <div class="circulo amarela"></div>
+          <h3>Amarela</h3>
+          <p>Categoria de raça/cor</p>
+        </div>
+
+        <div class="raca">
+          <div class="circulo indigena"></div>
+          <h3>Indígena</h3>
+          <p>Categoria de raça/cor</p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- GRÁFICOS ESTATÍSTICOS DE RAÇA/COR -->
+  <section id="graficos-raca">
+    <div class="titulo">
+      <small>Dados estatísticos</small>
+      <h2>Raça/cor por Região Administrativa</h2>
+      <p>
+        Percentuais da população segundo raça/cor, com base na PDAD 2021 da
+        CODEPLAN, para as 33 Regiões Administrativas contempladas pela pesquisa. Quando a estimativa não foi divulgada por insuficiência de
+        amostra, o gráfico indica "N/D".
+      </p>
+    </div>
+
+    <div class="grafico-card">
+      <h3>Comparação entre as 33 Regiões Administrativas</h3>
+      <div class="legenda-grafico">
+        <span><i class="leg-branca"></i>Branca</span>
+        <span><i class="leg-preta"></i>Preta</span>
+        <span><i class="leg-parda"></i>Parda</span>
+        <span><i class="leg-amarela"></i>Amarela</span>
+        <span><i class="leg-indigena"></i>Indígena</span>
+      </div>
+      <div class="grafico-barras" id="graficoRaca"></div>
+      <p class="nota-grafico">
+        Fonte: CODEPLAN/DIEPS/GEREPS — PDAD 2021. "N/D" significa estimativa
+        não divulgada por insuficiência de amostra.
+      </p>
+    </div>
+
+    <div class="grafico-card">
+      <h3>Percentual de cada raça/cor por região</h3>
+      <div class="seletor-grafico">
+        <label for="seletorRaca">Escolha a categoria:</label>
+        <select id="seletorRaca">
+          <option value="Branca">Branca</option>
+          <option value="Preta">Preta</option>
+          <option value="Parda">Parda</option>
+          <option value="Amarela">Amarela</option>
+          <option value="Indígena">Indígena</option>
+        </select>
+      </div>
+      <div class="grafico-horizontal" id="graficoCategoria"></div>
+      <p class="nota-grafico">
+        Use o seletor para visualizar uma categoria por vez. As barras "N/D" indicam
+        estimativas não divulgadas por insuficiência de amostra.
+      </p>
+    </div>
+  </section>
+
+  <!-- INFORMAÇÕES -->
+
+  <section id="sobre">
+
+    <div class="titulo">
+      <small>Entenda</small>
+      <h2>Região não determina raça</h2>
+
+      <p>
+        A diversidade racial está presente em todas as partes
+        do Distrito Federal.
+      </p>
+    </div>
+
+
+    <div class="info">
+
+      <div class="info-box">
+
+        <h3>🏙️ Regiões Administrativas</h3>
+
+        <p>
+          As Regiões Administrativas são divisões territoriais
+          utilizadas para organizar a administração do Distrito
+          Federal. Elas possuem diferentes características
+          demográficas, urbanas, econômicas e históricas.
+        </p>
+
+      </div>
+
+
+      <div class="info-box">
+
+        <h3>👥 Raça/cor</h3>
+
+        <p>
+          Raça/cor é uma informação autodeclarada utilizada
+          em levantamentos estatísticos. Ela não deve ser
+          interpretada como uma característica exclusiva
+          de determinada região.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- DESTAQUES -->
+
+  <section>
+
+    <div class="titulo">
+      <small>Panorama</small>
+      <h2>O DF em perspectiva</h2>
+    </div>
+
+
+    <div class="estatisticas">
+
+      <div class="estatistica">
+        <strong>33</strong>
+        <span>Regiões Administrativas com dados da PDAD 2021</span>
+      </div>
+
+      <div class="estatistica">
+        <strong>5</strong>
+        <span>categorias de raça/cor utilizadas pelo IBGE</span>
+      </div>
+
+      <div class="estatistica">
+        <strong>∞</strong>
+        <span>histórias e identidades que formam o DF</span>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- FONTES -->
+
+  <section id="fontes">
+
+    <div class="titulo">
+      <small>Pesquisa</small>
+      <h2>Fontes e dados</h2>
+
+      <p>
+        Para transformar este projeto em um trabalho escolar
+        com dados estatísticos, recomenda-se utilizar fontes
+        oficiais e informar sempre o ano da pesquisa.
+      </p>
+    </div>
+
+
+    <div class="fontes">
+
+      <h3>📚 Fontes recomendadas</h3>
+
+      <br>
+
+      <p>
+        <strong>Secretaria de Segurança Pública do Distrito Federal:</strong>
+        dados organizados por Região Administrativa.
+      </p>
+
+      <p>
+        <strong>IBGE:</strong>
+        dados de população e raça/cor.
+      </p>
+
+      <p>
+        <strong>CODEPLAN:</strong>
+        estudos e pesquisas sobre população,
+        território e condições socioeconômicas do DF.
+      </p>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<footer>
+
+  <p>
+    <strong>DF+</strong> — Regiões e Diversidade do Distrito Federal
+  </p>
+
+  <p>
+    Projeto educativo • Dados devem ser consultados na fonte oficial
+    e identificados pelo ano da pesquisa.
+  </p>
+
+</footer>
+
+
+<script>
+
+
+  const dadosRaca = {
+    "SCIA-Estrutural": {"Branca":21.4,"Preta":14.2,"Parda":61.2,"Amarela":2.2,"Indígena":null},
+    "São Sebastião": {"Branca":25.0,"Preta":11.9,"Parda":62.1,"Amarela":0.8,"Indígena":null},
+    "Fercal": {"Branca":24.7,"Preta":15.3,"Parda":57.7,"Amarela":null,"Indígena":null},
+    "Paranoá": {"Branca":28.1,"Preta":12.8,"Parda":57.8,"Amarela":null,"Indígena":null},
+    "Varjão": {"Branca":27.5,"Preta":22.9,"Parda":47.2,"Amarela":1.9,"Indígena":null},
+    "Brazlândia": {"Branca":28.3,"Preta":11.7,"Parda":57.5,"Amarela":2.1,"Indígena":null},
+    "Riacho Fundo II": {"Branca":30.2,"Preta":11.9,"Parda":56.7,"Amarela":1.0,"Indígena":null},
+    "Sol Nascente/Pôr do Sol": {"Branca":30.3,"Preta":14.0,"Parda":53.9,"Amarela":1.4,"Indígena":null},
+    "Recanto das Emas": {"Branca":30.4,"Preta":13.6,"Parda":53.3,"Amarela":2.3,"Indígena":null},
+    "Santa Maria": {"Branca":32.9,"Preta":15.0,"Parda":50.4,"Amarela":1.1,"Indígena":null},
+    "Itapoã": {"Branca":32.4,"Preta":19.8,"Parda":45.4,"Amarela":null,"Indígena":null},
+    "Planaltina": {"Branca":34.3,"Preta":11.2,"Parda":52.0,"Amarela":2.0,"Indígena":null},
+    "Sobradinho II": {"Branca":35.3,"Preta":16.6,"Parda":46.4,"Amarela":null,"Indígena":null},
+    "Samambaia": {"Branca":36.7,"Preta":10.5,"Parda":50.7,"Amarela":null,"Indígena":null},
+    "Sobradinho": {"Branca":38.6,"Preta":16.5,"Parda":43.5,"Amarela":null,"Indígena":null},
+    "Ceilândia": {"Branca":38.9,"Preta":14.0,"Parda":45.8,"Amarela":null,"Indígena":null},
+    "Candangolândia": {"Branca":38.6,"Preta":15.6,"Parda":43.7,"Amarela":1.7,"Indígena":null},
+    "Núcleo Bandeirante": {"Branca":38.5,"Preta":11.1,"Parda":47.6,"Amarela":2.5,"Indígena":null},
+    "Riacho Fundo": {"Branca":39.0,"Preta":11.5,"Parda":46.7,"Amarela":2.6,"Indígena":null},
+    "Gama": {"Branca":42.3,"Preta":14.0,"Parda":42.8,"Amarela":null,"Indígena":null},
+    "Taguatinga": {"Branca":41.5,"Preta":10.7,"Parda":45.6,"Amarela":1.8,"Indígena":null},
+    "Vicente Pires": {"Branca":45.2,"Preta":6.5,"Parda":47.3,"Amarela":0.9,"Indígena":null},
+    "Arniqueira": {"Branca":44.6,"Preta":9.1,"Parda":43.6,"Amarela":1.9,"Indígena":null},
+    "SIA": {"Branca":42.1,"Preta":null,"Parda":50.2,"Amarela":null,"Indígena":null},
+    "Guará": {"Branca":51.8,"Preta":6.6,"Parda":40.5,"Amarela":0.8,"Indígena":null},
+    "Águas Claras": {"Branca":55.3,"Preta":3.5,"Parda":40.1,"Amarela":1.0,"Indígena":null},
+    "Cruzeiro": {"Branca":55.5,"Preta":7.5,"Parda":35.5,"Amarela":null,"Indígena":null},
+    "Jardim Botânico": {"Branca":56.2,"Preta":6.5,"Parda":35.7,"Amarela":1.4,"Indígena":null},
+    "Lago Norte": {"Branca":60.6,"Preta":6.1,"Parda":32.8,"Amarela":null,"Indígena":null},
+    "Plano Piloto": {"Branca":61.0,"Preta":6.7,"Parda":30.7,"Amarela":1.3,"Indígena":null},
+    "Sudoeste/Octogonal": {"Branca":62.0,"Preta":2.6,"Parda":33.7,"Amarela":1.5,"Indígena":null},
+    "Park Way": {"Branca":63.7,"Preta":8.0,"Parda":26.3,"Amarela":2.1,"Indígena":null},
+    "Lago Sul": {"Branca":66.8,"Preta":2.4,"Parda":30.3,"Amarela":null,"Indígena":null}
+  };
+
+  const classesRaca = {
+    "Branca":"branca",
+    "Preta":"preta",
+    "Parda":"parda",
+    "Amarela":"amarela",
+    "Indígena":"indigena"
+  };
+
+  function criarGraficoRaca() {
+    const container = document.getElementById("graficoRaca");
+    if (!container) return;
+
+    Object.entries(dadosRaca).forEach(([regiao, dados]) => {
+      const grupo = document.createElement("div");
+      grupo.className = "grupo-regiao";
+
+      ["Branca","Preta","Parda","Amarela","Indígena"].forEach(raca => {
+        const barra = document.createElement("div");
+        const valor = dados[raca];
+        barra.className = "barra " + classesRaca[raca];
+
+        if (valor === null) {
+          barra.classList.add("nd");
+          barra.style.height = "5px";
+          barra.title = `${raca}: N/D`;
+        } else {
+          barra.style.height = `${valor * 3.05}px`;
+          barra.title = `${raca}: ${valor.toFixed(1).replace(".", ",")}%`;
+
+          const texto = document.createElement("span");
+          texto.textContent = `${valor.toFixed(1).replace(".", ",")}%`;
+          barra.appendChild(texto);
+        }
+
+        grupo.appendChild(barra);
+      });
+
+      const nome = document.createElement("div");
+      nome.className = "nome-regiao";
+      nome.textContent = regiao;
+      grupo.appendChild(nome);
+      container.appendChild(grupo);
+    });
+  }
+
+  function atualizarGraficoCategoria() {
+    const categoria = document.getElementById("seletorRaca").value;
+    const container = document.getElementById("graficoCategoria");
+    container.innerHTML = "";
+
+    Object.entries(dadosRaca).forEach(([regiao, dados]) => {
+      const valor = dados[categoria];
+
+      const linha = document.createElement("div");
+      linha.className = "linha-categoria";
+
+      const rotulo = document.createElement("div");
+      rotulo.className = "rotulo";
+      rotulo.textContent = regiao;
+
+      const trilho = document.createElement("div");
+      trilho.className = "trilho";
+
+      const preenchimento = document.createElement("div");
+      preenchimento.className = "preenchimento";
+      preenchimento.style.width = valor === null ? "0%" : `${valor}%`;
+      trilho.appendChild(preenchimento);
+
+      const valorTexto = document.createElement("div");
+      valorTexto.className = "valor-categoria";
+      valorTexto.textContent = valor === null ? "N/D" : `${valor.toFixed(1).replace(".", ",")}%`;
+
+      linha.appendChild(rotulo);
+      linha.appendChild(trilho);
+      linha.appendChild(valorTexto);
+      container.appendChild(linha);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    criarGraficoRaca();
+    atualizarGraficoCategoria();
+    document.getElementById("seletorRaca").addEventListener("change", atualizarGraficoCategoria);
+  });
+
+  function filtrar(regiao, botao) {
+
+    const cards = document.querySelectorAll(".card");
+    const botoes = document.querySelectorAll(".filtro");
+
+    botoes.forEach(b => b.classList.remove("ativo"));
+
+    botao.classList.add("ativo");
+
+    cards.forEach(card => {
+
+      if (regiao === "todas") {
+        card.style.display = "block";
+      }
+
+      else if (card.dataset.regiao === regiao) {
+        card.style.display = "block";
+      }
+
+      else {
+        card.style.display = "none";
+      }
+
+    });
+
+  }
+
+</script>
+
+</body>
+</html>
